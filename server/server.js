@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(require('./routes/users').app)
 
-mongoose.connect('mongodb://localhost:27017/cafe', {
+mongoose.connect(process.env.URL_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
