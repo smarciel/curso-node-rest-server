@@ -7,7 +7,9 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(require('./routes/users').app)
+
+//Configuracion de rutas
+app.use(require('./routes/index').app)
 
 mongoose.connect(process.env.URL_DB, {
     useNewUrlParser: true,
