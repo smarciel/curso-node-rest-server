@@ -2,11 +2,11 @@ const express = require('express')
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
+const { verificaToken, verificaAdminRole } = require('../middlewares/authentication');
 
-const app = express()
+const app = express();
 
-app.get('/usuario', function(req, res) {
-
+app.get('/usuario', verificaToken, (req, res) => {
     let from = req.query.from || 0;
     from = Number(from);
 
@@ -34,7 +34,7 @@ app.get('/usuario', function(req, res) {
         });
 })
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaAdminRole], (req, res) => {
     let body = req.body;
 
     let user = new User({
@@ -59,7 +59,7 @@ app.post('/usuario', function(req, res) {
     })
 })
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -78,7 +78,7 @@ app.put('/usuario/:id', function(req, res) {
     });
 })
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
 
     let statusUpdated = {
