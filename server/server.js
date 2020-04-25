@@ -27,6 +27,7 @@ mongoose.connect(process.env.URL_DB, {
 });
 
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 app.listen(process.env.PORT, () => {
     console.log('Escuchando el puerto: ' + process.env.PORT);
